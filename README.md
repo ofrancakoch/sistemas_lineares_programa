@@ -19,9 +19,12 @@ Fazer um vídeo onde todos os integrantes do grupo devem aparecer com imagem e �
 
 O que deverá ser postado no AVA:
 
-nome da linguagem utilizada
-código no formato original e também em pdf.
-vídeo
+nome da linguagem utilizada;
+
+código no formato original e também em pdf,
+
+vídeo;
+
 Apenas um dos integrantes do grupo deve fazer a postagem, no entanto, deve escrever nos comentários da tarefa o nome e RA de todos os integrantes.
 
 Caprichem!
