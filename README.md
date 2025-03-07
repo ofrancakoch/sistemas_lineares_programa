@@ -1,6 +1,4 @@
-# sistemas_lineares_programa
-
-# Instruções
+# Instruções | Sistemas Lineares 
 Grupos com até 4 integrantes
 
 Desenvolver um programa para a resolução de Sistemas Lineares até 10x10.
