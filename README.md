@@ -10,12 +10,19 @@ A resolução deverá ser feita pelo método do escalonamento.
 Requisitos obrigatórios na execução do programa:
 
 deverá solicitar o tamanho do sistema
+
 deverá solicitar os coeficientes e termos independentes
+
 deverá imprimir o sistema original
+
 deverá imprimir o sistema escalonado
+
 deverá imprimir a solução
+
 caso não tenha solução (SI) ou tenha infinitas soluções (SPI), deverá dar uma mensagem. 
-Fazer um vídeo onde todos os integrantes do grupo devem aparecer com imagem e áudio. Compartilhar a tela do programa e explicar rapidamente o código e então executar um exemplo de tamanho mínimo 3x3.
+
+Fazer um vídeo onde todos os integrantes do grupo devem aparecer com imagem e áudio. 
+Compartilhar a tela do programa e explicar rapidamente o código e então executar um exemplo de tamanho mínimo 3x3.
 
 O que deverá ser postado no AVA:
 
