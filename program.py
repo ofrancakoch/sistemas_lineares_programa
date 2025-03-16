@@ -1,68 +1,61 @@
-class linearSystems: 
-
-    def _init_(self): 
-        self.size = int(input("Enter the size of the linear system")) 
+class LinearSystems: 
+    def __init__(self): 
+        self.size = int(input("Enter the size of the linear system: ")) 
         self.matrix = self.get_matrix() 
         self.variables = self.get_variables()
 
     def get_matrix(self): 
-        # Initialize matrix 
+        # Inicializa a matriz 
         matrix = [] 
-        print("Enter the entries row wise:") 
+        print("Enter the entries row-wise:") 
 
-        for row in range(self.size):     
-            line = [] 
-            # A for loop for column entries 
-            for column in range(self.size + 1):    
-                line.append(int(input())) 
+        for _ in range(self.size):     
+            line = [float(input()) for _ in range(self.size + 1)]
             matrix.append(line) 
 
         return matrix
 
-    
     def get_variables(self):
-        print("Enter the variables") 
-        variables = [] 
-        for variable in range(self.size): 
-            variables.append(float(input())) 
-        print(variables) 
+        print("Enter the variables:") 
+        variables = [str(input()) for _ in range(self.size)]
         return variables
 
     def solver(self): 
-        matrix_unsolved = self.matrix 
+        # Criar uma cópia da matriz para não alterar a original
+        matrix_unsolved = [row[:] for row in self.matrix]
         size = self.size 
         row = 0 
         column = 0
-        diagonal_element = matrix_unsolved[row][column]
-        while (diagonal_element != None) or ((row < size) and (column < size)): 
+
+        while row < size and column < size: 
+            diagonal_element = matrix_unsolved[row][column]
 
             if diagonal_element != 0:
-
                 for r in range(row + 1, size):
-                    pivot = -1*diagonal_element/matrix_unsolved[r][column]
-                    for c in range(column, size + 1):
-                        matrix_unsolved[r][c] = matrix_unsolved[row][c] + pivot*matrix_unsolved[r][c]
+                    if matrix_unsolved[r][column] != 0:
+                        pivot = -matrix_unsolved[r][column] / diagonal_element
+                        for c in range(column, size + 1):
+                            matrix_unsolved[r][c] += pivot * matrix_unsolved[row][c]
 
                 row += 1
                 column += 1
-                diagonal_element = matrix_unsolved[row][column]
-            else:
 
+            else:
+                # Troca de linhas caso o pivô seja zero
                 for r in range(row + 1, size):
                     if matrix_unsolved[r][column] != 0:
-                        wrong_row = matrix_unsolved[row]   
-                        matrix_unsolved[row] = matrix_unsolved[r]
-                        matrix_unsolved[r] = wrong_row
-                #Fazer exceçao para que trate SPI e SI
+                        matrix_unsolved[row], matrix_unsolved[r] = matrix_unsolved[r], matrix_unsolved[row]
+                        break
+                else:
+                    column += 1  # Pula a coluna se não houver elementos não nulos
 
         return matrix_unsolved
 
-    def printMatrix(self, size, matrix): 
-        for row in range(size): 
-            for column in range(size+1): 
-                print(matrix[row][column], end=" ") 
-            print() 
+    def printMatrix(self): 
+        matrix = self.solver()
+        print("Matrix after Gaussian elimination:")
+        for row in matrix:
+            print(" ".join(map(str, row)))
 
-    def conclusion(self, system : list): 
-
-        pass
+teste = LinearSystems()
+teste.printMatrix()
