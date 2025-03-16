@@ -1,36 +1,68 @@
-def solver(system_size : int, system : list):
-    Size = int(input("Enter the System Size:"))
-    print("Enter the coeficients")
-    coeficients = []
-    for coeficient in range(Size):
-        coeficients.append(float(input()))
-    print(coeficients)
-        
-    # Initialize matrix
-    matrix = []
-    print("Enter the entries row wise:")
+class linearSystems: 
 
-    # For user input
-    # A for loop for row entries
-    for row in range(Size+1):    
-        a = []
-        # A for loop for column entries
-        for column in range(Size+1):   
-            a.append(int(input()))
-        matrix.append(a)
+    def _init_(self): 
+        self.size = int(input("Enter the size of the linear system")) 
+        self.matrix = self.get_matrix() 
+        self.variables = self.get_variables()
 
-    # For printing the matrix
-    for row in range(Size):
-        for column in range(Size):
-            print(matrix[row][column], end=" ")
-        print()
+    def get_matrix(self): 
+        # Initialize matrix 
+        matrix = [] 
+        print("Enter the entries row wise:") 
 
+        for row in range(self.size):     
+            line = [] 
+            # A for loop for column entries 
+            for column in range(self.size + 1):    
+                line.append(int(input())) 
+            matrix.append(line) 
 
+        return matrix
 
-def introduction():
-    pass
+    
+    def get_variables(self):
+        print("Enter the variables") 
+        variables = [] 
+        for variable in range(self.size): 
+            variables.append(float(input())) 
+        print(variables) 
+        return variables
 
+    def solver(self): 
+        matrix_unsolved = self.matrix 
+        size = self.size 
+        row = 0 
+        column = 0
+        diagonal_element = matrix_unsolved[row][column]
+        while (diagonal_element != None) or ((row < size) and (column < size)): 
 
+            if diagonal_element != 0:
 
-def conclusion(system : list):
-    pass
+                for r in range(row + 1, size):
+                    pivot = -1*diagonal_element/matrix_unsolved[r][column]
+                    for c in range(column, size + 1):
+                        matrix_unsolved[r][c] = matrix_unsolved[row][c] + pivot*matrix_unsolved[r][c]
+
+                row += 1
+                column += 1
+                diagonal_element = matrix_unsolved[row][column]
+            else:
+
+                for r in range(row + 1, size):
+                    if matrix_unsolved[r][column] != 0:
+                        wrong_row = matrix_unsolved[row]   
+                        matrix_unsolved[row] = matrix_unsolved[r]
+                        matrix_unsolved[r] = wrong_row
+                #Fazer exceçao para que trate SPI e SI
+
+        return matrix_unsolved
+
+    def printMatrix(self, size, matrix): 
+        for row in range(size): 
+            for column in range(size+1): 
+                print(matrix[row][column], end=" ") 
+            print() 
+
+    def conclusion(self, system : list): 
+
+        pass
