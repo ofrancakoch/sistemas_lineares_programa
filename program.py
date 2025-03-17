@@ -52,9 +52,9 @@ class LinearSystems:
             # Verificar SPI e SI
             for i in range(size):
                 if all(matriz_unsolved[i][j] == 0 for j in range(size)) and matriz_unsolved[i][size] != 0:
-                    raise ValueError("Sistema Impossível (SPI): Nenhuma solução existe.")
+                    raise ValueError("Sistema Possível e Indeterminado (SPI): Infinitas Soluções.")
                 elif all(matriz_unsolved[i][j] == 0 for j in range(size)) and matriz_unsolved[i][size] == 0:
-                    raise ValueError("Sistema Indeterminado (SI): Infinitas soluções.")
+                    raise ValueError("Sistema Impossível (SI): Nenhuma Solução.")
 
         return matriz_unsolved
 
@@ -86,7 +86,7 @@ class LinearSystems:
             print(equation_str, "=", result)
 
     def resultado(self):
-        print("Sistema Original\n")
+        print("\n\nSistema Original\n")
         self.printSistemaLinear(self.matriz)
         print("\nSistema Escalonado\n")
         self.printSistemaLinear(self.solver())
@@ -94,6 +94,7 @@ class LinearSystems:
         solution = self.back_substitution()
         for var, sol in zip(self.variables, solution):
             print(f"{var} = {sol:.2f}")
+        print()
 
 # Execução do programa
 if __name__ == "__main__":
