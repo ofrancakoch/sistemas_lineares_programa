@@ -1,102 +1,100 @@
-class LinearSystems: 
+class SistemaLinear: 
     def __init__(self): 
-        self.size = int(input("Enter the size of the linear system: ")) 
+        self.tamanho = int(input("Insira o tamanho do Sistema Linear: ")) 
         self.matriz = self.get_matriz() 
-        self.variables = self.get_variables()
+        self.variaveis = self.get_variaveis()
 
     def get_matriz(self): 
         # Inicializa a matriz 
         matriz = [] 
-        print("Enter the entries row-wise:") 
+        print("Insira os elemtentos da matriz com o termo independente ao final de cada linha:") 
 
-        for _ in range(self.size):     
-            line = [float(input()) for _ in range(self.size + 1)]
+        for _ in range(self.tamanho):     
+            line = [float(input()) for _ in range(self.tamanho + 1)]
             matriz.append(line) 
 
         return matriz
 
-    def get_variables(self):
-        print("Enter the variables:") 
-        variables = [str(input()) for _ in range(self.size)]
-        return variables
+    def get_variaveis(self):
+        print("Insira as variáveis:") 
+        variaveis = [str(input()) for _ in range(self.tamanho)]
+        return variaveis
 
     def solver(self): 
         # Criar uma cópia da matriz para não alterar a original
-        matriz_unsolved = [row[:] for row in self.matriz]
-        size = self.size 
-        row = 0 
-        column = 0
+        matriz = [linha[:] for linha in self.matriz]
+        tamanho = self.tamanho 
+        linha = 0 
+        coluna = 0
 
-        while row < size and column < size: 
-            diagonal_element = matriz_unsolved[row][column]
+        while linha < tamanho and coluna < tamanho: 
+            diagonal = matriz[linha][coluna]
 
-            if diagonal_element != 0:
-                for r in range(row + 1, size):
-                    if matriz_unsolved[r][column] != 0:
-                        pivot = -matriz_unsolved[r][column] / diagonal_element
-                        for c in range(column, size + 1):
-                            matriz_unsolved[r][c] += pivot * matriz_unsolved[row][c]
+            if diagonal != 0:
+                for r in range(linha + 1, tamanho):
+                    if matriz[r][coluna] != 0:
+                        pivot = -matriz[r][coluna] / diagonal
+                        for c in range(coluna, tamanho + 1):
+                            matriz[r][c] += pivot * matriz[linha][c]
 
-                row += 1
-                column += 1
+                linha += 1
+                coluna += 1
             
             else:
                 # Troca de linhas caso o pivô seja zero
-                for r in range(row + 1, size):
-                    if matriz_unsolved[r][column] != 0:
-                        matriz_unsolved[row], matriz_unsolved[r] = matriz_unsolved[r], matriz_unsolved[row]
+                for r in range(linha + 1, tamanho):
+                    if matriz[r][coluna] != 0:
+                        matriz[linha], matriz[r] = matriz[r], matriz[linha]
                         break
-                else:
-                    column += 1  # Pula a coluna se não houver elementos não nulos
 
             # Verificar SPI e SI
-            for i in range(size):
-                if all(matriz_unsolved[i][j] == 0 for j in range(size)) and matriz_unsolved[i][size] != 0:
+            for i in range(tamanho):
+                if all(matriz[i][j] == 0 for j in range(tamanho)) and matriz[i][tamanho] != 0:
                     raise ValueError("Sistema Possível e Indeterminado (SPI): Infinitas Soluções.")
-                elif all(matriz_unsolved[i][j] == 0 for j in range(size)) and matriz_unsolved[i][size] == 0:
+                elif all(matriz[i][j] == 0 for j in range(tamanho)) and matriz[i][tamanho] == 0:
                     raise ValueError("Sistema Impossível (SI): Nenhuma Solução.")
 
-        return matriz_unsolved
+        return matriz
 
-    def back_substitution(self):
+    def resultado(self):
         # Substituição regressiva para encontrar os valores das variáveis
         matriz = self.solver()
-        size = self.size
-        resultado = [0 for _ in range(size)]
+        tamanho = self.tamanho
+        resultado = [0 for _ in range(tamanho)]
 
-        for i in range(size - 1, -1, -1):
-            sum_ax = sum(matriz[i][j] * resultado[j] for j in range(i + 1, size))
-            resultado[i] = (matriz[i][size] - sum_ax) / matriz[i][i]
+        for i in range(tamanho - 1, -1, -1):
+            soma = sum(matriz[i][j] * resultado[j] for j in range(i + 1, tamanho))
+            resultado[i] = (matriz[i][tamanho] - soma) / matriz[i][i]
 
         return resultado
     
 
-    def printSistemaLinear(self, matriz):
-        variables = self.variables
+    def mostrarSistema(self, matriz):
+        variaveis = self.variaveis
         
-        for row in range(self.size):
-            equation_parts = []
-            for col in range(self.size):
-                coef = round(matriz[row][col], 2)
+        for linha in range(self.tamanho):
+            partes_equacao = []
+            for col in range(self.tamanho):
+                coef = round(matriz[linha][col], 2)
                 if coef != 0:
-                    equation_parts.append(f"{coef}{variables[col]}")
+                    partes_equacao.append(f"{coef}{variaveis[col]}")
             
-            result = round(matriz[row][self.size], 2)
-            equation_str = " + ".join(equation_parts).replace("+ -", "- ")
-            print(equation_str, "=", result)
+            resultado = round(matriz[linha][self.tamanho], 2)
+            equacao_str = " + ".join(partes_equacao).replace("+ -", "- ")
+            print(equacao_str, "=", resultado)
 
     def resultado(self):
         print("\n\nSistema Original\n")
-        self.printSistemaLinear(self.matriz)
+        self.mostrarSL(self.matriz)
         print("\nSistema Escalonado\n")
-        self.printSistemaLinear(self.solver())
+        self.mostrarSL(self.solver())
         print("\nResultado\n")
-        solution = self.back_substitution()
-        for var, sol in zip(self.variables, solution):
+        solucao = self.resultado()
+        for var, sol in zip(self.variaveis, solucao):
             print(f"{var} = {sol:.2f}")
         print()
 
 # Execução do programa
 if __name__ == "__main__":
-    teste = LinearSystems()
+    teste = SistemaLinear()
     teste.resultado()
