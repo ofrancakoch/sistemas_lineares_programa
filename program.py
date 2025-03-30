@@ -7,7 +7,7 @@ class SistemaLinear:
     def get_matriz(self): 
         # Inicializa a matriz 
         matriz = [] 
-        print("Insira os elemtentos da matriz com o termo independente ao final de cada linha:") 
+        print("Insira os elementos da matriz com o termo independente ao final de cada linha:") 
 
         for _ in range(self.tamanho):     
             line = [float(input()) for _ in range(self.tamanho + 1)]
@@ -50,10 +50,10 @@ class SistemaLinear:
             # Verificar SPI e SI
             for i in range(tamanho):
                 if all(matriz[i][j] == 0 for j in range(tamanho)) and matriz[i][tamanho] != 0:
-                    raise ValueError("Sistema Possível e Indeterminado (SPI): Infinitas Soluções.")
-                elif all(matriz[i][j] == 0 for j in range(tamanho)) and matriz[i][tamanho] == 0:
                     raise ValueError("Sistema Impossível (SI): Nenhuma Solução.")
-
+                elif all(matriz[i][j] == 0 for j in range(tamanho)) and matriz[i][tamanho] == 0:
+                    raise ValueError("Sistema Possível e Indeterminado (SPI): Infinitas Soluções.")
+                    
         return matriz
 
     def resultado(self):
