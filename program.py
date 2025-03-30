@@ -69,7 +69,7 @@ class SistemaLinear:
         return resultado
     
 
-    def mostrarSistema(self, matriz):
+    def mostrarSL(self, matriz):
         variaveis = self.variaveis
         
         for linha in range(self.tamanho):
