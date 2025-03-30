@@ -83,7 +83,7 @@ class SistemaLinear:
             equacao_str = " + ".join(partes_equacao).replace("+ -", "- ")
             print(equacao_str, "=", resultado)
 
-    def resultado(self):
+    def printResultados(self):
         print("\n\nSistema Original\n")
         self.mostrarSL(self.matriz)
         print("\nSistema Escalonado\n")
@@ -97,4 +97,4 @@ class SistemaLinear:
 # Execução do programa
 if __name__ == "__main__":
     teste = SistemaLinear()
-    teste.resultado()
+    teste.printResultados()
