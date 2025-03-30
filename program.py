@@ -96,5 +96,5 @@ class SistemaLinear:
 
 # Execução do programa
 if __name__ == "__main__":
-    teste = SistemaLinear()
-    teste.printResultados()
+    executar = SistemaLinear()
+    executar.printResultados()
